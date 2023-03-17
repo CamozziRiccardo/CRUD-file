@@ -47,11 +47,21 @@ namespace CRUD
         {
             //richiamo la vera funzione cancellamento
             cancellazione(textBox3.Text);
+
+            //pulisco le textBox per un nuovo inserimento
+            textBox3.Text = "";
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            mod(textBox4.Text, textBox5.Text);
+            //richiamo la funzione di modifica
+            mod(textBox3.Text, textBox4.Text, textBox5.Text);
+
+            //pulisco le textBox per un nuovo inserimento
+            textBox3.Text = "";
+            textBox4.Text = "";
+            textBox5.Text = "";
+
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -156,7 +166,7 @@ namespace CRUD
         }
 
         //funzione di modifica
-        void mod(string nome, string prezzo)
+        void mod(string ricerca, string nome, string prezzo)
         {
             using (StreamReader sr = File.OpenText(filename))
             {
@@ -170,7 +180,7 @@ namespace CRUD
                     while ((s = sr.ReadLine()) != null)
                     {
                         //... se la stringa momentanea è diversa dal nome ...
-                        if (s != nome)
+                        if (s != ricerca)
                         {
                             //... la stampo nel file temporaneo ...
                             sr2.WriteLine(s);
