@@ -43,9 +43,25 @@ namespace CRUD
             falsesearch(textBox3.Text);
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //richiamo la vera funzione cancellamento
+            cancellazione(textBox3.Text);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            mod(textBox4.Text, textBox5.Text);
+        }
+
         private void button5_Click(object sender, EventArgs e)
         {
             visualizza();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            delete();
         }
 
         #endregion
@@ -61,7 +77,7 @@ namespace CRUD
                 using (StreamWriter sw = new StreamWriter(filename, append: false))
                 {
                     //copio nel file le stringhe delle textBox
-                    sw.WriteLine(textBox1.Text + " €" + textBox2.Text);
+                    sw.WriteLine(nome + " €" + prezzo);
                 }
             }
 
@@ -72,7 +88,7 @@ namespace CRUD
                 using(StreamWriter sw = new StreamWriter(filename, append: true))
                 {
                     //copio nel file le stringhe delle textBox
-                    sw.WriteLine(textBox1.Text + " €" + textBox2.Text);
+                    sw.WriteLine(nome + " €" + prezzo);
                 }
             }
 
@@ -92,17 +108,88 @@ namespace CRUD
                     //... se la stringa è uguale al nome ...
                     if (s == nome)
                     {
-                        //stampo una messagebox di ritrovamento...
+                        //... stampo una messagebox di ritrovamento...
                         MessageBox.Show("La stringa è stata trovata");
+
+                        //... e ritorno al programma ...
+                        return;
                     }
-                    //... altrimenti ...
-                    else
+                }
+
+                //... altrimenti ...
+                {
+                    //... stampo una messagebox che avvisa che la stringa non esiste...
+                    MessageBox.Show("La stringa non è stata trovata");
+                }
+            }
+        }
+
+        //funzione di cancellamento
+        void cancellazione(string nome)
+        {
+            using (StreamReader sr = File.OpenText(filename))
+            {
+                //creo una stringa momentanea
+                string s;
+
+                //creo un file temporaneo
+                using(StreamWriter sr2 = new StreamWriter("temp.csv"))
+                {
+                    //mentre la stringa momentanea non diventa nulla assumeno i valori delle stringhe nel file...
+                    while ((s = sr.ReadLine()) != null)
                     {
-                        //... stampo una messagebox che avvisa che la stringa non esiste...
-                        MessageBox.Show("La stringa non è stata trovata");
+                        //... se la stringa momentanea è diversa dal nome ...
+                        if (s != nome)
+                        {
+                            //... la stampo nel file temporaneo
+                            sr2.WriteLine(s);
+                        }
                     }
                 }
             }
+
+            //cancello il file principale
+            File.Delete(filename);
+
+            //e rinomino il file momentaneo, rendendolo il nuovo principale
+            File.Move("temp.csv", filename);
+        }
+
+        //funzione di modifica
+        void mod(string nome, string prezzo)
+        {
+            using (StreamReader sr = File.OpenText(filename))
+            {
+                //creo una stringa momentanea
+                string s;
+
+                //creo un file temporaneo
+                using (StreamWriter sr2 = new StreamWriter("temp.csv", append: true))
+                {
+                    //mentre la stringa momentanea non diventa nulla assumeno i valori delle stringhe nel file...
+                    while ((s = sr.ReadLine()) != null)
+                    {
+                        //... se la stringa momentanea è diversa dal nome ...
+                        if (s != nome)
+                        {
+                            //... la stampo nel file temporaneo ...
+                            sr2.WriteLine(s);
+                        }
+                        //... mentre se la stringa dovesse corrispondere ...
+                        else
+                        {
+                            //... stampo la stringa modificata nel file temporaneo
+                            sr2.WriteLine(nome + " €" + prezzo);
+                        }
+                    }
+                }
+            }
+
+            //cancello il file principale
+            File.Delete(filename);
+
+            //e rinomino il file momentaneo, rendendolo il nuovo principale
+            File.Move("temp.csv", filename);
         }
 
         //funzione di stampa del file
@@ -131,6 +218,15 @@ namespace CRUD
                     }
 
                 }
+            }
+        }
+
+        //funzione di cancellamento del file
+        void delete()
+        {
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
             }
         }
         #endregion
