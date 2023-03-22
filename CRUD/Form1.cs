@@ -73,7 +73,6 @@ namespace CRUD
         {
             delete();
         }
-
         #endregion
 
         #region funzioni di servizio
@@ -115,8 +114,8 @@ namespace CRUD
                 //mentre la stringa momentanea non diventa nulla assumeno i valori delle stringhe nel file...
                 while((s = sr.ReadLine()) != null)
                 {
-                    //... se la stringa è uguale al nome ...
-                    if (s == nome)
+                    //... se il nome appartiene alla stringa ...
+                    if (s.Contains(nome))
                     {
                         //... stampo una messagebox di ritrovamento...
                         MessageBox.Show("La stringa è stata trovata");
@@ -148,8 +147,8 @@ namespace CRUD
                     //mentre la stringa momentanea non diventa nulla assumeno i valori delle stringhe nel file...
                     while ((s = sr.ReadLine()) != null)
                     {
-                        //... se la stringa momentanea è diversa dal nome ...
-                        if (s != nome)
+                        //... se nella stringa momentanea non è presente il nome ricercato ...
+                        if (s.Contains(nome) == false)
                         {
                             //... la stampo nel file temporaneo
                             sr2.WriteLine(s);
@@ -179,17 +178,17 @@ namespace CRUD
                     //mentre la stringa momentanea non diventa nulla assumeno i valori delle stringhe nel file...
                     while ((s = sr.ReadLine()) != null)
                     {
-                        //... se la stringa momentanea è diversa dal nome ...
-                        if (s != ricerca)
+                        //... se nella stringa momentanea non è presente il nome ricercatoe ...
+                        if (s.Contains(ricerca))
                         {
-                            //... la stampo nel file temporaneo ...
-                            sr2.WriteLine(s);
+                            //... stampo la stringa modificata nel file temporaneo ...
+                            sr2.WriteLine(nome + " €" + prezzo);
                         }
                         //... mentre se la stringa dovesse corrispondere ...
                         else
                         {
-                            //... stampo la stringa modificata nel file temporaneo
-                            sr2.WriteLine(nome + " €" + prezzo);
+                            //... la stampo nel file temporaneo ...
+                            sr2.WriteLine(s);
                         }
                     }
                 }
