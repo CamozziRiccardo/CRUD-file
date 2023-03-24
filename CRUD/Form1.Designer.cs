@@ -47,6 +47,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -158,7 +159,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(174, 153);
+            this.label6.Location = new System.Drawing.Point(174, 163);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(76, 13);
             this.label6.TabIndex = 27;
@@ -167,7 +168,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 153);
+            this.label5.Location = new System.Drawing.Point(12, 163);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(84, 13);
             this.label5.TabIndex = 26;
@@ -175,21 +176,21 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(177, 170);
+            this.textBox5.Location = new System.Drawing.Point(177, 179);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(141, 20);
             this.textBox5.TabIndex = 25;
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(15, 170);
+            this.textBox4.Location = new System.Drawing.Point(15, 179);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(141, 20);
             this.textBox4.TabIndex = 24;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(324, 162);
+            this.button4.Location = new System.Drawing.Point(324, 171);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(153, 35);
             this.button4.TabIndex = 23;
@@ -217,11 +218,22 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(324, 140);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(153, 23);
+            this.button7.TabIndex = 30;
+            this.button7.Text = "Ripristina i prodotti cancellati";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.label6);
@@ -269,6 +281,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
     }
 }
 

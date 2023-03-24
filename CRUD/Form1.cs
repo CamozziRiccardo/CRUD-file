@@ -45,11 +45,16 @@ namespace CRUD
 
         private void button3_Click(object sender, EventArgs e)
         {
-            //richiamo la vera funzione cancellamento
-            cancellazione(textBox3.Text);
+            //controllo cancellazione logica
+            cancl(textBox3.Text);
 
             //pulisco le textBox per un nuovo inserimento
             textBox3.Text = "";
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            ripr();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -87,7 +92,7 @@ namespace CRUD
                 using (StreamWriter sw = new StreamWriter(filename, append: false))
                 {
                     //copio nel file le stringhe delle textBox
-                    sw.WriteLine(nome + " €" + prezzo);
+                    sw.WriteLine(nome + " €" + prezzo + "; true");
 
                     //chiudo il file
                     sw.Close();
@@ -101,7 +106,7 @@ namespace CRUD
                 using(StreamWriter sw = new StreamWriter(filename, append: true))
                 {
                     //copio nel file le stringhe delle textBox
-                    sw.WriteLine(nome + " €" + prezzo);
+                    sw.WriteLine(nome + " €" + prezzo + "; true");
 
                     //chiudo il file
                     sw.Close();
@@ -143,35 +148,78 @@ namespace CRUD
             }
         }
 
-        //funzione di cancellamento
-        void cancellazione(string nome)
+        //funzione di controllo cancellazione logica
+        void cancl(string nome)
+        {
+            //stringa momentanea
+            string s;
+
+            int i = 0;
+
+            using (StreamReader sr = File.OpenText(filename))
+            {
+                while ((s = sr.ReadLine()) != null)
+                {
+                    i++;
+                }
+
+                //chiudo il file
+                sr.Close();
+
+                string[] name = new string[i];
+                using (StreamWriter sr2 = new StreamWriter(filename))
+                {
+                    for (int j = 0; j < name.Length; j++)
+                    {
+                        if (s.Contains(nome))
+                        {
+                            sr2.WriteLine(s + "; true");
+                        }
+                        else
+                        {
+                            sr2.WriteLine(s + "; false");
+                        }
+                    }
+                }
+            }
+        }
+
+        void ripr()
         {
             using (StreamReader sr = File.OpenText(filename))
             {
-                //creo una stringa momentanea
+                //stringa momentanea
                 string s;
 
-                //creo un file temporaneo
-                using(StreamWriter sr2 = new StreamWriter("temp.csv"))
+                using (StreamWriter sr2 = new StreamWriter(filename, append: false))
                 {
-                    //mentre la stringa momentanea non diventa nulla assumeno i valori delle stringhe nel file...
                     while ((s = sr.ReadLine()) != null)
                     {
-                        //... se nella stringa momentanea non è presente il nome ricercato ...
-                        if (s.Contains(nome) == false)
+                        if (!s.Contains("true"))
                         {
-                            //... la stampo nel file temporaneo
+                            //divido la stringa in varie sottostringhe
+                            string[] words = s.Split(' ');
+
+                            //ciclo di stampa e controllo
+                            for (int i = 0; i < words.Length; i++)
+                            {
+                                if (words[i] != "false" && i + 1 != words.Length)
+                                {
+                                    sr2.Write(words[i] + " ");
+                                }
+                                else
+                                {
+                                    sr2.WriteLine("; true");
+                                }
+                            }
+                        }
+                        else
+                        {
                             sr2.WriteLine(s);
                         }
                     }
                 }
             }
-
-            //cancello il file principale
-            File.Delete(filename);
-
-            //e rinomino il file momentaneo, rendendolo il nuovo principale
-            File.Move("temp.csv", filename);
         }
 
         //funzione di modifica
@@ -192,7 +240,7 @@ namespace CRUD
                         if (s.Contains(ricerca))
                         {
                             //... stampo la stringa modificata nel file temporaneo ...
-                            sr2.WriteLine(nome + " €" + prezzo);
+                            sr2.WriteLine(nome + " €" + prezzo + "; true");
                         }
                         //... mentre se la stringa dovesse corrispondere ...
                         else
@@ -231,8 +279,11 @@ namespace CRUD
                     //mentre la stringa momentanea non diventa nulla assumeno i valori delle stringhe nel file...
                     while ((s = sr.ReadLine()) != null)
                     {
-                        //... e stampo la stringa nella listview
-                        listView1.Items.Add(s);
+                        if (s.Contains("true"))
+                        {
+                            //... e stampo la stringa nella listview
+                            listView1.Items.Add(s);
+                        }
                     }
 
                     //chiudo il file
