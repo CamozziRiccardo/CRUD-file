@@ -23,7 +23,7 @@ namespace CRUD
         }
         #endregion
 
-        #region pulsanti
+        #region eventi
         private void button1_Click(object sender, EventArgs e)
         {
             //richiamo la funzione di creazione e aggiornamento del file
@@ -73,6 +73,7 @@ namespace CRUD
         {
             delete();
         }
+
         #endregion
 
         #region funzioni di servizio
@@ -87,6 +88,9 @@ namespace CRUD
                 {
                     //copio nel file le stringhe delle textBox
                     sw.WriteLine(nome + " €" + prezzo);
+
+                    //chiudo il file
+                    sw.Close();
                 }
             }
 
@@ -98,6 +102,9 @@ namespace CRUD
                 {
                     //copio nel file le stringhe delle textBox
                     sw.WriteLine(nome + " €" + prezzo);
+
+                    //chiudo il file
+                    sw.Close();
                 }
             }
 
@@ -130,6 +137,9 @@ namespace CRUD
                     //... stampo una messagebox che avvisa che la stringa non esiste...
                     MessageBox.Show("La stringa non è stata trovata");
                 }
+
+                //chiudo il file
+                sr.Close();
             }
         }
 
@@ -193,7 +203,6 @@ namespace CRUD
                     }
                 }
             }
-
             //cancello il file principale
             File.Delete(filename);
 
@@ -226,6 +235,8 @@ namespace CRUD
                         listView1.Items.Add(s);
                     }
 
+                    //chiudo il file
+                    sr.Close();
                 }
             }
         }
